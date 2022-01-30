@@ -1,4 +1,4 @@
-package com.tenniscourts.schedules;
+package com.tenniscourts.schedules.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.tenniscourts.schedules;
 
+import com.tenniscourts.schedules.model.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.tenniscourts.reservations;
+package com.tenniscourts.reservations.model;
 
-import com.tenniscourts.schedules.ScheduleDTO;
+import com.tenniscourts.schedules.model.ScheduleDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

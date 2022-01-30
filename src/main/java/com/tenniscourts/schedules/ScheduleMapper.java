@@ -1,5 +1,7 @@
 package com.tenniscourts.schedules;
 
+import com.tenniscourts.schedules.model.Schedule;
+import com.tenniscourts.schedules.model.ScheduleDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;

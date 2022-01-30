@@ -1,6 +1,7 @@
 package com.tenniscourts.tenniscourts;
 
 import com.tenniscourts.config.BaseRestController;
+import com.tenniscourts.tenniscourts.model.TennisCourtDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 

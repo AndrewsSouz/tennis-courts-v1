@@ -1,6 +1,8 @@
 package com.tenniscourts.reservations;
 
 import com.tenniscourts.config.BaseRestController;
+import com.tenniscourts.reservations.model.CreateReservationRequestDTO;
+import com.tenniscourts.reservations.model.ReservationDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 

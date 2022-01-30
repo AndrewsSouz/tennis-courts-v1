@@ -1,6 +1,10 @@
 package com.tenniscourts.reservations;
 
 import com.tenniscourts.exceptions.EntityNotFoundException;
+import com.tenniscourts.reservations.model.CreateReservationRequestDTO;
+import com.tenniscourts.reservations.model.Reservation;
+import com.tenniscourts.reservations.model.ReservationDTO;
+import com.tenniscourts.reservations.model.ReservationStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

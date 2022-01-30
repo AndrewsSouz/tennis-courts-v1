@@ -1,5 +1,7 @@
 package com.tenniscourts.schedules;
 
+import com.tenniscourts.schedules.model.CreateScheduleRequestDTO;
+import com.tenniscourts.schedules.model.ScheduleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

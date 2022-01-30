@@ -1,4 +1,4 @@
-package com.tenniscourts.reservations;
+package com.tenniscourts.reservations.model;
 
 public enum ReservationStatus {
   READY_TO_PLAY,

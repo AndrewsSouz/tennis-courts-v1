@@ -1,4 +1,4 @@
-package com.tenniscourts.tenniscourts;
+package com.tenniscourts.tenniscourts.model;
 
 import com.tenniscourts.config.persistence.BaseEntity;
 import lombok.AllArgsConstructor;
