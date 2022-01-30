@@ -21,7 +21,9 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
 
     public ReservationDTO bookReservation(CreateReservationRequestDTO createReservationRequestDTO) {
-        return reservationMapper.map(reservationRepository.save(reservationMapper.map(createReservationRequestDTO)));
+        var reservation = reservationMapper.map(createReservationRequestDTO);
+        reservation.setValue(new BigDecimal(10));
+        return reservationMapper.map(reservationRepository.save(reservation));
     }
 
     public ReservationDTO findReservation(Long reservationId) {
