@@ -5,13 +5,16 @@ import com.tenniscourts.schedules.model.CreateScheduleRequestDTO;
 import com.tenniscourts.schedules.model.ScheduleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+@RestController
 @AllArgsConstructor
+@RequestMapping("/schedule")
 public class ScheduleController extends BaseRestController {
 
     private final ScheduleService scheduleService;
@@ -28,7 +31,8 @@ public class ScheduleController extends BaseRestController {
     }
 
     //TODO: implement rest and swagger
-    public ResponseEntity<ScheduleDTO> findByScheduleId(Long scheduleId) {
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleDTO> findByScheduleId(@PathVariable Long scheduleId) {
         return ResponseEntity.ok(scheduleService.findSchedule(scheduleId));
     }
 }

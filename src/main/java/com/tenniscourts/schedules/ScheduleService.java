@@ -1,5 +1,6 @@
 package com.tenniscourts.schedules;
 
+import com.tenniscourts.exceptions.EntityNotFoundException;
 import com.tenniscourts.schedules.model.CreateScheduleRequestDTO;
 import com.tenniscourts.schedules.model.ScheduleDTO;
 import lombok.AllArgsConstructor;
@@ -27,8 +28,10 @@ public class ScheduleService {
     }
 
     public ScheduleDTO findSchedule(Long scheduleId) {
-        //TODO: implement
-        return null;
+        return scheduleRepository.findById(scheduleId).map(scheduleMapper::map).orElseThrow(() -> {
+                    throw new EntityNotFoundException("Schedule not found");
+                }
+        );
     }
 
     public List<ScheduleDTO> findSchedulesByTennisCourtId(Long tennisCourtId) {
