@@ -96,4 +96,9 @@ public class ReservationService {
         newReservation.setPreviousReservation(reservationMapper.map(previousReservation));
         return newReservation;
     }
+
+    public boolean existsReservationByScheduleId(Long scheduleId) {
+        return reservationRepository.existsBySchedule_Id(scheduleId);
+    }
+
 }
