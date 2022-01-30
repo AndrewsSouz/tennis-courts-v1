@@ -42,15 +42,15 @@ public class ReservationService {
             this.validateCancellation(reservation);
 
             BigDecimal refundValue = getRefundValue(reservation);
-            return this.updateReservation(reservation, refundValue, ReservationStatus.CANCELLED);
+            return this.updateReservation(reservation, refundValue);
 
         }).orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
     }
 
-    private Reservation updateReservation(Reservation reservation, BigDecimal refundValue, ReservationStatus status) {
-        reservation.setReservationStatus(status);
+    private Reservation updateReservation(Reservation reservation, BigDecimal refundValue) {
+        reservation.setReservationStatus(ReservationStatus.CANCELLED);
         reservation.setValue(reservation.getValue().subtract(refundValue));
         reservation.setRefundValue(refundValue);
 
