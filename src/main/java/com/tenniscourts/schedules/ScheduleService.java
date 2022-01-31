@@ -23,9 +23,10 @@ public class ScheduleService {
 
     private final ScheduleMapper scheduleMapper;
 
-    public ScheduleDTO addSchedule(Long tennisCourtId, CreateScheduleRequestDTO createScheduleRequestDTO) {
-        //TODO: implement addSchedule
-        return null;
+    public ScheduleDTO addSchedule(CreateScheduleRequestDTO createScheduleRequestDTO) {
+        var schedule = scheduleMapper.map(createScheduleRequestDTO);
+        schedule.setEndDateTime(schedule.getStartDateTime().plusHours(1));
+        return scheduleMapper.map(scheduleRepository.save(schedule));
     }
 
     public List<ScheduleDTO> findSchedulesByDates(LocalDateTime startDate, LocalDateTime endDate) {
