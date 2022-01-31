@@ -1,5 +1,6 @@
 package com.tenniscourts.reservations;
 
+import com.tenniscourts.exceptions.AlreadyExistsEntityException;
 import com.tenniscourts.exceptions.EntityNotFoundException;
 import com.tenniscourts.reservations.model.CreateReservationRequestDTO;
 import com.tenniscourts.reservations.model.Reservation;
@@ -22,6 +23,9 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
 
     public ReservationDTO bookReservation(CreateReservationRequestDTO createReservationRequestDTO) {
+        if (existsReservationByScheduleId(createReservationRequestDTO.getScheduleId())) {
+            throw new AlreadyExistsEntityException("Already exists a reservation for this time");
+        }
         var reservation = reservationMapper.map(createReservationRequestDTO);
         reservation.setValue(new BigDecimal(10));
         reservation.setReservationStatus(READY_TO_PLAY);
@@ -39,16 +43,14 @@ public class ReservationService {
     }
 
     private Reservation cancel(Long reservationId) {
-        return reservationRepository.findById(reservationId).map(reservation -> {
+        return reservationRepository.findById(reservationId)
+                .map(this::validateCancellationAndUpdateReservation)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found."));
+    }
 
-            this.validateCancellation(reservation);
-
-            BigDecimal refundValue = getRefundValue(reservation);
-            return this.updateReservation(reservation, refundValue);
-
-        }).orElseThrow(() -> {
-            throw new EntityNotFoundException("Reservation not found.");
-        });
+    private Reservation validateCancellationAndUpdateReservation(Reservation reservation) {
+        validateCancellation(reservation);
+        return updateReservation(reservation, getRefundValue(reservation));
     }
 
     private Reservation updateReservation(Reservation reservation, BigDecimal refundValue) {
@@ -104,7 +106,7 @@ public class ReservationService {
     }
 
     public boolean existsReservationByScheduleId(Long scheduleId) {
-        return reservationRepository.existsBySchedule_Id(scheduleId);
+        return reservationRepository.existsByScheduleId(scheduleId);
     }
 
 }

@@ -15,4 +15,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     List<Schedule> findSchedulesByStartDateTimeGreaterThanEqualAndEndDateTimeLessThanEqual(
             LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    boolean existsByTennisCourtIdAndStartDateTime(Long tennisCourtId, LocalDateTime startDateTime);
 }

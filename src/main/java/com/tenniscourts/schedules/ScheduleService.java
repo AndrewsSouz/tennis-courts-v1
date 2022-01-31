@@ -1,5 +1,6 @@
 package com.tenniscourts.schedules;
 
+import com.tenniscourts.exceptions.AlreadyExistsEntityException;
 import com.tenniscourts.exceptions.EntityNotFoundException;
 import com.tenniscourts.reservations.ReservationService;
 import com.tenniscourts.schedules.model.CreateScheduleRequestDTO;
@@ -24,6 +25,7 @@ public class ScheduleService {
     private final ScheduleMapper scheduleMapper;
 
     public ScheduleDTO addSchedule(CreateScheduleRequestDTO createScheduleRequestDTO) {
+        validateSchedule(createScheduleRequestDTO);
         var schedule = scheduleMapper.map(createScheduleRequestDTO);
         schedule.setEndDateTime(schedule.getStartDateTime().plusHours(1));
         return scheduleMapper.map(scheduleRepository.save(schedule));
@@ -69,5 +71,13 @@ public class ScheduleService {
         var scheduleDto = scheduleMapper.map(schedule);
         scheduleDto.setTennisCourtId(tenniCourtId);
         return scheduleDto;
+    }
+
+    private void validateSchedule(CreateScheduleRequestDTO schedule) {
+        var exists = scheduleRepository.existsByTennisCourtIdAndStartDateTime(
+                schedule.getTennisCourtId(), schedule.getStartDateTime());
+        if (exists) {
+            throw new AlreadyExistsEntityException("Schedule already exists");
+        }
     }
 }

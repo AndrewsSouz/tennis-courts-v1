@@ -1,5 +1,6 @@
 package com.tenniscourts.tenniscourts;
 
+import com.tenniscourts.exceptions.AlreadyExistsEntityException;
 import com.tenniscourts.exceptions.EntityNotFoundException;
 import com.tenniscourts.schedules.ScheduleService;
 import com.tenniscourts.tenniscourts.model.TennisCourtDTO;
@@ -23,6 +24,7 @@ public class TennisCourtService {
     private final TennisCourtMapper tennisCourtMapper;
 
     public TennisCourtDTO addTennisCourt(TennisCourtDTO tennisCourt) {
+        existsByName(tennisCourt.getName());
         return tennisCourtMapper.map(tennisCourtRepository.saveAndFlush(tennisCourtMapper.map(tennisCourt)));
     }
 
@@ -43,5 +45,15 @@ public class TennisCourtService {
         var tennisCourtDTO = findTennisCourtById(tennisCourtId);
         tennisCourtDTO.setTennisCourtSchedules(scheduleService.findSchedulesByTennisCourtId(tennisCourtId));
         return tennisCourtDTO;
+    }
+
+    public void validateTennisCourt(Long tennisCourtId) {
+        if (!tennisCourtRepository.existsById(tennisCourtId))
+            throw new EntityNotFoundException("Tennis court not exists");
+    }
+
+    private void existsByName(String name) {
+        if (tennisCourtRepository.existsByName(name))
+            throw new AlreadyExistsEntityException("Tennis court already registered");
     }
 }

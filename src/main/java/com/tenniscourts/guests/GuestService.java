@@ -5,9 +5,13 @@ import com.tenniscourts.guests.model.CreateGuestDTO;
 import com.tenniscourts.guests.model.GuestDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @Service
 @AllArgsConstructor
@@ -28,16 +32,17 @@ public class GuestService {
     }
 
     public List<GuestDTO> findByGuestName(String guestName) {
-        var guests = guestRepository.findByNameIgnoreCaseContaining(guestName).stream()
-                .map(guestMapper::map).collect(Collectors.toList());
-        if (guests.isEmpty()) {
-            throw new EntityNotFoundException("No one guests found");
-        }
-        return guests;
+        return Optional.of(guestRepository.findByNameIgnoreCaseContaining(guestName).stream()
+                        .map(guestMapper::map)
+                        .collect(Collectors.toList()))
+                .orElseThrow(() -> new EntityNotFoundException("No guests found"));
     }
 
     public List<GuestDTO> findAllGuests() {
-        return guestRepository.findAll().stream().map(guestMapper::map).collect(Collectors.toList());
+        return Optional.of(guestRepository.findAll().stream()
+                        .map(guestMapper::map)
+                        .collect(Collectors.toList()))
+                .orElseThrow(() -> new ResponseStatusException(NO_CONTENT));
     }
 
     public GuestDTO updateGuest(Long guestId, CreateGuestDTO createGuestDTO) {

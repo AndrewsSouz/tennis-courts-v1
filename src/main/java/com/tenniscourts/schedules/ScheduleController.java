@@ -18,19 +18,19 @@ import java.util.List;
 @RequestMapping("/schedules")
 public class ScheduleController extends BaseRestController {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleFacade scheduleFacade;
 
     //TODO: implement rest and swagger
     @PostMapping
     public ResponseEntity<Void> addScheduleTennisCourt(@RequestBody CreateScheduleRequestDTO createScheduleRequestDTO) {
         return ResponseEntity.created(
-                locationByEntity(scheduleService.addSchedule(createScheduleRequestDTO).getId())).build();
+                locationByEntity(scheduleFacade.addSchedule(createScheduleRequestDTO).getId())).build();
     }
 
     //TODO: implement rest and swagger
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleDTO> findByScheduleId(@PathVariable Long scheduleId) {
-        return ResponseEntity.ok(scheduleService.findScheduleById(scheduleId));
+        return ResponseEntity.ok(scheduleFacade.findScheduleById(scheduleId));
     }
 
     //TODO: implement rest and swagger
@@ -38,7 +38,7 @@ public class ScheduleController extends BaseRestController {
     public ResponseEntity<List<ScheduleDTO>> findSchedulesByDates(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return ResponseEntity.ok(scheduleService.findSchedulesByDates(
+        return ResponseEntity.ok(scheduleFacade.findSchedulesByDates(
                 LocalDateTime.of(startDate, LocalTime.of(0, 0)),
                 LocalDateTime.of(endDate, LocalTime.of(23, 59))));
     }
@@ -48,7 +48,7 @@ public class ScheduleController extends BaseRestController {
             @PathVariable Long tennisCourtId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return ResponseEntity.ok(scheduleService.findFreeSchedulesByTennisCourtAndDates(tennisCourtId,
+        return ResponseEntity.ok(scheduleFacade.findFreeSchedulesByTennisCourtAndDates(tennisCourtId,
                 LocalDateTime.of(startDate, LocalTime.of(0, 0)),
                 LocalDateTime.of(endDate, LocalTime.of(23, 59))));
     }
