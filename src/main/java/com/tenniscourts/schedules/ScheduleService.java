@@ -38,15 +38,24 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public ScheduleDTO findSchedule(Long scheduleId) {
+    public ScheduleDTO findScheduleById(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).map(scheduleMapper::map).orElseThrow(() -> {
                     throw new EntityNotFoundException("Schedule not found");
                 }
         );
     }
 
+    public List<ScheduleDTO> findFreeSchedulesByTennisCourtAndDates(Long tenniCourtId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return scheduleRepository.findSchedulesByTennisCourtIdAndStartDateTimeGreaterThanEqualAndEndDateTimeLessThanEqual(
+                        tenniCourtId, startDateTime, endDateTime).stream()
+                .map(this::verifyScheduleReservation)
+                .filter(Objects::nonNull)
+                .map(schedule -> this.addTennisCourtIdAndMapToDTO(schedule.getTennisCourt().getId(), schedule))
+                .collect(Collectors.toList());
+    }
+
     public List<ScheduleDTO> findSchedulesByTennisCourtId(Long tennisCourtId) {
-        return scheduleMapper.map(scheduleRepository.findByTennisCourt_IdOrderByStartDateTime(tennisCourtId));
+        return scheduleMapper.map(scheduleRepository.findByTennisCourtIdOrderByStartDateTime(tennisCourtId));
     }
 
     private Schedule verifyScheduleReservation(Schedule schedule) {

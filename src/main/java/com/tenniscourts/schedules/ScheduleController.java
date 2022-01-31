@@ -28,6 +28,12 @@ public class ScheduleController extends BaseRestController {
     }
 
     //TODO: implement rest and swagger
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleDTO> findByScheduleId(@PathVariable Long scheduleId) {
+        return ResponseEntity.ok(scheduleService.findScheduleById(scheduleId));
+    }
+
+    //TODO: implement rest and swagger
     @GetMapping("/freeslots")
     public ResponseEntity<List<ScheduleDTO>> findSchedulesByDates(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -37,9 +43,13 @@ public class ScheduleController extends BaseRestController {
                 LocalDateTime.of(endDate, LocalTime.of(23, 59))));
     }
 
-    //TODO: implement rest and swagger
-    @GetMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleDTO> findByScheduleId(@PathVariable Long scheduleId) {
-        return ResponseEntity.ok(scheduleService.findSchedule(scheduleId));
+    @GetMapping("/freeslots/{tennisCourtId}")
+    public ResponseEntity<List<ScheduleDTO>> findFreeSchedulesByTennisCourtAndDates(
+            @PathVariable Long tennisCourtId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(scheduleService.findFreeSchedulesByTennisCourtAndDates(tennisCourtId,
+                LocalDateTime.of(startDate, LocalTime.of(0, 0)),
+                LocalDateTime.of(endDate, LocalTime.of(23, 59))));
     }
 }

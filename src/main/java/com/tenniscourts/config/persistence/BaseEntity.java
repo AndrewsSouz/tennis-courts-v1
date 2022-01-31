@@ -1,25 +1,20 @@
 package com.tenniscourts.config.persistence;
 
 import com.tenniscourts.audit.CustomAuditEntityListener;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
 @Getter
 @Setter
-@EqualsAndHashCode
 @EntityListeners(CustomAuditEntityListener.class)
 public class BaseEntity<ID> implements Serializable {
 
@@ -47,4 +42,16 @@ public class BaseEntity<ID> implements Serializable {
     @CreatedDate
     private LocalDateTime dateCreate;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BaseEntity<?> that = (BaseEntity<?>) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
