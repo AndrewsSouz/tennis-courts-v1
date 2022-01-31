@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController()
 @AllArgsConstructor
-@RequestMapping("/tennis-court")
+@RequestMapping("/tennis-courts")
 public class TennisCourtController extends BaseRestController {
 
     private final TennisCourtService tennisCourtService;
@@ -17,6 +19,12 @@ public class TennisCourtController extends BaseRestController {
     @PostMapping
     public ResponseEntity<Void> addTennisCourt(@RequestBody TennisCourtDTO tennisCourtDTO) {
         return ResponseEntity.created(locationByEntity(tennisCourtService.addTennisCourt(tennisCourtDTO).getId())).build();
+    }
+
+    //TODO: implement rest and swagger
+    @GetMapping()
+    public ResponseEntity<List<TennisCourtDTO>> findTennisCourts() {
+        return ResponseEntity.ok(tennisCourtService.findTennisCourts());
     }
 
     //TODO: implement rest and swagger
