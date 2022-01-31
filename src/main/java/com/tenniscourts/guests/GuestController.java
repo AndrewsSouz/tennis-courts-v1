@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/guest")
+@RequestMapping("/guests")
 @Api("Guests Resource, operations to manage guests")
 public class GuestController extends BaseRestController {
 
