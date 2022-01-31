@@ -26,7 +26,7 @@ public class ReservationService {
         return reservationMapper.map(reservationRepository.save(reservation));
     }
 
-    public ReservationDTO findReservation(Long reservationId) {
+    public ReservationDTO findReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId).map(reservationMapper::map).orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
@@ -80,19 +80,19 @@ public class ReservationService {
     /*TODO: This method actually not fully working, find a way to fix the issue when it's throwing the error:
             "Cannot reschedule to the same slot.*/
     public ReservationDTO rescheduleReservation(Long previousReservationId, Long scheduleId) {
-        Reservation previousReservation = cancel(previousReservationId);
+        ReservationDTO previousReservationToCheck = findReservationById(previousReservationId);
 
-        if (scheduleId.equals(previousReservation.getSchedule().getId())) {
-            throw new IllegalArgumentException("Cannot reschedule to the same slot.");
+        if (scheduleId.equals(previousReservationToCheck.getSchedule().getId())) {
+            return previousReservationToCheck;
         }
+
+        var previousReservation = cancel(previousReservationId);
 
         previousReservation.setReservationStatus(ReservationStatus.RESCHEDULED);
         reservationRepository.save(previousReservation);
 
-        ReservationDTO newReservation = bookReservation(CreateReservationRequestDTO.builder()
-                .guestId(previousReservation.getGuest().getId())
-                .scheduleId(scheduleId)
-                .build());
+        ReservationDTO newReservation =
+                bookReservation(new CreateReservationRequestDTO(previousReservation.getGuest().getId(), scheduleId));
         newReservation.setPreviousReservation(reservationMapper.map(previousReservation));
         return newReservation;
     }

@@ -21,7 +21,7 @@ public class ReservationController extends BaseRestController {
 
     @GetMapping("/{reservationId}")
     public ResponseEntity<ReservationDTO> findReservation(@PathVariable Long reservationId) {
-        return ResponseEntity.ok(reservationService.findReservation(reservationId));
+        return ResponseEntity.ok(reservationService.findReservationById(reservationId));
     }
 
     @PatchMapping("/cancel/{reservationId}")
