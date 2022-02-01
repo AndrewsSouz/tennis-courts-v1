@@ -13,8 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("Book a reservation given a guest and a scheduleId")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Entregador no modo online/offline"),
-        @ApiResponse(code = 404, message = "Entregador não encontrado"),
-        @ApiResponse(code = 500, message = "Erro inesperado na aplicação")})
+        @ApiResponse(code = 200, message = "Successfully booked a reservation"),
+        @ApiResponse(code = 400, message = "Something wrong with the request")})
 public @interface BookReservationSwaggerInfo {
 }

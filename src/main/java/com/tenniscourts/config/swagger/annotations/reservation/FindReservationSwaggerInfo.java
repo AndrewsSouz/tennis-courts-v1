@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("Find a reservation given a reservationId")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Found the reservation"),
+        @ApiResponse(code = 200, message = "Return the reservation"),
         @ApiResponse(code = 400, message = "Something wrong with the request"),
         @ApiResponse(code = 404, message = "Reservation not found")})
 public @interface FindReservationSwaggerInfo {

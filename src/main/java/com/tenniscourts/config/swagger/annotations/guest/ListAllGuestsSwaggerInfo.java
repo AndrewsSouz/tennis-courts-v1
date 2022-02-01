@@ -13,7 +13,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("List all guests")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Found the guest"),
+        @ApiResponse(code = 200, message = "Return all guests"),
+        @ApiResponse(code = 204, message = "No guests found"),
         @ApiResponse(code = 400, message = "Something wrong with the request")})
 public @interface ListAllGuestsSwaggerInfo {
 }

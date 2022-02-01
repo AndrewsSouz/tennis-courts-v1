@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("Find schedule by id")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Found the schedule"),
+        @ApiResponse(code = 200, message = "Return the schedule"),
         @ApiResponse(code = 400, message = "Something wrong with the request"),
         @ApiResponse(code = 404, message = "Schedule not found")})
 public @interface FindScheduleSwaggerInfo {

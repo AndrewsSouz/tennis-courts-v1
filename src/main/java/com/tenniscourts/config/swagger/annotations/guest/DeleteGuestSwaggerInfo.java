@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("Delete a guest by id.")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Deleted the guest"),
+        @ApiResponse(code = 204, message = "Guest has been deleted"),
         @ApiResponse(code = 400, message = "Something wrong with the request"),
         @ApiResponse(code = 404, message = "Guest not found")})
 public @interface DeleteGuestSwaggerInfo {

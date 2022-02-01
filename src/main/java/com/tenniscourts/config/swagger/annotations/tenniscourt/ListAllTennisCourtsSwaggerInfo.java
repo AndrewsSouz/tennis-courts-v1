@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiOperation("List all Tennis Courts")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Found the tennis court"),
+        @ApiResponse(code = 200, message = "Retrieve the tennis courts"),
         @ApiResponse(code = 400, message = "Something wrong with the request"),
         @ApiResponse(code = 404, message = "Tennis court not found")})
 public @interface ListAllTennisCourtsSwaggerInfo {
