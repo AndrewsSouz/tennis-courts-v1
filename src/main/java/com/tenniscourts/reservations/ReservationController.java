@@ -8,9 +8,14 @@ import com.tenniscourts.config.swagger.annotations.reservation.RescheduleReserva
 import com.tenniscourts.reservations.model.CreateReservationRequestDTO;
 import com.tenniscourts.reservations.model.ReservationDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -43,5 +48,12 @@ public class ReservationController extends BaseRestController {
     public ResponseEntity<ReservationDTO> rescheduleReservation(@RequestParam Long reservationId,
                                                                 @RequestParam Long scheduleId) {
         return ResponseEntity.ok(reservationService.rescheduleReservation(reservationId, scheduleId));
+    }
+
+    @GetMapping("/history")
+    @ApiOperation("Return the all the reservations before the actual date")
+    @ApiResponses(@ApiResponse(code = 200, message = "Successfully retrieved the reservation history"))
+    public ResponseEntity<List<ReservationDTO>> reservationHistoric() {
+        return ResponseEntity.ok(reservationService.findPastReservations());
     }
 }

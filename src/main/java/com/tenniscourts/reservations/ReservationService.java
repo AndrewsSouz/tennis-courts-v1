@@ -9,8 +9,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.tenniscourts.reservations.model.ReservationStatus.*;
 
@@ -36,6 +40,12 @@ public class ReservationService {
         return reservationRepository.findById(reservationId).map(reservationMapper::map).orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
+    }
+
+    public List<ReservationDTO> findPastReservations() {
+        var dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
+        return reservationRepository.findByScheduleStartDateTimeLessThanEqual(dateTime)
+                .stream().map(reservationMapper::map).collect(Collectors.toList());
     }
 
     public ReservationDTO cancelReservation(Long reservationId) {
