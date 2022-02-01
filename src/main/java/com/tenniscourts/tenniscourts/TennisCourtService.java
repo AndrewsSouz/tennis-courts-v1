@@ -35,7 +35,7 @@ public class TennisCourtService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
 
-    public TennisCourtDTO findTennisCourtById(Long id) {
+    private TennisCourtDTO findTennisCourtById(Long id) {
         return tennisCourtRepository.findById(id).map(tennisCourtMapper::map).orElseThrow(() -> {
             throw new EntityNotFoundException("Tennis Court not found.");
         });

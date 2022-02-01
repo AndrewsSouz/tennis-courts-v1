@@ -1,6 +1,7 @@
 package com.tenniscourts.tenniscourts.model;
 
 import com.tenniscourts.schedules.model.ScheduleDTO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +20,14 @@ import java.util.List;
 @AllArgsConstructor
 public class TennisCourtDTO {
 
+    @ApiModelProperty("Tennis court identifier")
     private Long id;
 
     @NotNull
+    @ApiModelProperty("Tennis court name")
     private String name;
 
+    @ApiModelProperty("Tennis court schedules")
     private List<ScheduleDTO> tennisCourtSchedules;
 
 }

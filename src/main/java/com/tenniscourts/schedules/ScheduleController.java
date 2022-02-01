@@ -1,8 +1,13 @@
 package com.tenniscourts.schedules;
 
 import com.tenniscourts.config.BaseRestController;
+import com.tenniscourts.config.swagger.annotations.schedule.AddScheduleSwaggerInfo;
+import com.tenniscourts.config.swagger.annotations.schedule.FindScheduleSwaggerInfo;
+import com.tenniscourts.config.swagger.annotations.schedule.FreeSlotsByTennisCourtSwaggerInfo;
+import com.tenniscourts.config.swagger.annotations.schedule.FreeSlotsSwaggerInfo;
 import com.tenniscourts.schedules.model.CreateScheduleRequestDTO;
 import com.tenniscourts.schedules.model.ScheduleDTO;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +21,26 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/schedules")
+@Api("Schedule resource, operations to manage schedules")
 public class ScheduleController extends BaseRestController {
 
     private final ScheduleFacade scheduleFacade;
 
-    //TODO: implement rest and swagger
     @PostMapping
+    @AddScheduleSwaggerInfo
     public ResponseEntity<Void> addScheduleTennisCourt(@RequestBody CreateScheduleRequestDTO createScheduleRequestDTO) {
         return ResponseEntity.created(
                 locationByEntity(scheduleFacade.addSchedule(createScheduleRequestDTO).getId())).build();
     }
 
-    //TODO: implement rest and swagger
     @GetMapping("/{scheduleId}")
+    @FindScheduleSwaggerInfo
     public ResponseEntity<ScheduleDTO> findByScheduleId(@PathVariable Long scheduleId) {
         return ResponseEntity.ok(scheduleFacade.findScheduleById(scheduleId));
     }
 
-    //TODO: implement rest and swagger
     @GetMapping("/freeslots")
+    @FreeSlotsSwaggerInfo
     public ResponseEntity<List<ScheduleDTO>> findSchedulesByDates(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
@@ -44,6 +50,7 @@ public class ScheduleController extends BaseRestController {
     }
 
     @GetMapping("/freeslots/{tennisCourtId}")
+    @FreeSlotsByTennisCourtSwaggerInfo
     public ResponseEntity<List<ScheduleDTO>> findFreeSchedulesByTennisCourtAndDates(
             @PathVariable Long tennisCourtId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
