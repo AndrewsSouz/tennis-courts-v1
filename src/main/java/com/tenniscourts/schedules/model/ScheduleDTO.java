@@ -3,14 +3,16 @@ package com.tenniscourts.schedules.model;
 import com.tenniscourts.tenniscourts.model.TennisCourtDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ScheduleDTO {
 
     @ApiModelProperty("Schedule identifier")

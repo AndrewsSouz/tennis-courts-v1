@@ -57,7 +57,9 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> findSchedulesByTennisCourtId(Long tennisCourtId) {
-        return scheduleMapper.map(scheduleRepository.findByTennisCourtIdOrderByStartDateTime(tennisCourtId));
+        return scheduleRepository.findByTennisCourtIdOrderByStartDateTime(tennisCourtId).stream()
+                .map(scheduleMapper::map)
+                .collect(Collectors.toList());
     }
 
     private Schedule verifyScheduleReservation(Schedule schedule) {

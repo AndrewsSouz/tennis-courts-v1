@@ -29,8 +29,12 @@ public class ScheduleController extends BaseRestController {
     @PostMapping
     @AddScheduleSwaggerInfo
     public ResponseEntity<Void> addScheduleTennisCourt(@RequestBody CreateScheduleRequestDTO createScheduleRequestDTO) {
+        var scheduleDTO = scheduleFacade.addSchedule(createScheduleRequestDTO);
         return ResponseEntity.created(
-                locationByEntity(scheduleFacade.addSchedule(createScheduleRequestDTO).getId())).build();
+                        locationByEntity(
+
+                                       scheduleDTO .getId()))
+                .build();
     }
 
     @GetMapping("/{scheduleId}")

@@ -44,8 +44,9 @@ public class ReservationService {
 
     public List<ReservationDTO> findPastReservations() {
         var dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
-        return reservationRepository.findByScheduleStartDateTimeLessThanEqual(dateTime)
-                .stream().map(reservationMapper::map).collect(Collectors.toList());
+        return reservationRepository.findByScheduleStartDateTimeLessThanEqual(dateTime).stream()
+                .map(reservationMapper::map)
+                .collect(Collectors.toList());
     }
 
     public ReservationDTO cancelReservation(Long reservationId) {

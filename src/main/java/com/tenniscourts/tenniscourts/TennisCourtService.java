@@ -1,16 +1,14 @@
 package com.tenniscourts.tenniscourts;
 
+import com.tenniscourts.common.Utils;
 import com.tenniscourts.exceptions.AlreadyExistsEntityException;
 import com.tenniscourts.exceptions.EntityNotFoundException;
 import com.tenniscourts.schedules.ScheduleService;
 import com.tenniscourts.tenniscourts.model.TennisCourtDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +27,10 @@ public class TennisCourtService {
     }
 
     public List<TennisCourtDTO> findTennisCourts() {
-        return Optional.of(tennisCourtRepository.findAll().stream()
+        return Utils.verifyEmptyList(
+                tennisCourtRepository.findAll().stream()
                         .map(tennisCourtMapper::map)
-                        .collect(Collectors.toList()))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
+                        .collect(Collectors.toList()));
     }
 
     private TennisCourtDTO findTennisCourtById(Long id) {
