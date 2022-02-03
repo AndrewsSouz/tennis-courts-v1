@@ -49,9 +49,6 @@ public class GuestService {
     }
 
     public void deleteGuest(Long guestId) {
-        if (!guestRepository.existsById(guestId)) {
-            throw new EntityNotFoundException("Guest not exist");
-        }
         guestRepository.deleteById(guestId);
     }
 }

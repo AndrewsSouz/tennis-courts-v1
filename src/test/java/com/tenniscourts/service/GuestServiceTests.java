@@ -135,21 +135,8 @@ class GuestServiceTests {
     void whenDeleteByIdShouldTouchTheMethod() {
         var guestId = 1L;
 
-        when(guestRepository.existsById(guestId)).thenReturn(true);
-
         guestService.deleteGuest(guestId);
 
         verify(guestRepository, times(1)).deleteById(guestId);
     }
-
-    @Test
-    void whenDeleteByIdShouldThrowException() {
-        var guestId = 1L;
-
-        when(guestRepository.existsById(guestId)).thenReturn(false);
-
-        assertThrows(EntityNotFoundException.class, () -> guestService.deleteGuest(guestId));
-    }
-
-
 }
