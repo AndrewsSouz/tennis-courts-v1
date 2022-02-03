@@ -1,16 +1,10 @@
 package com.tenniscourts.reservations;
 
 import com.tenniscourts.config.BaseRestController;
-import com.tenniscourts.config.swagger.annotations.reservation.BookReservationSwaggerInfo;
-import com.tenniscourts.config.swagger.annotations.reservation.CancelReservationSwaggerInfo;
-import com.tenniscourts.config.swagger.annotations.reservation.FindReservationSwaggerInfo;
-import com.tenniscourts.config.swagger.annotations.reservation.RescheduleReservationSwaggerInfo;
+import com.tenniscourts.config.swagger.annotations.reservation.*;
 import com.tenniscourts.reservations.model.CreateReservationRequestDTO;
 import com.tenniscourts.reservations.model.ReservationDTO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +45,7 @@ public class ReservationController extends BaseRestController {
     }
 
     @GetMapping("/history")
-    @ApiOperation("Return the all the reservations before the actual date")
-    @ApiResponses(@ApiResponse(code = 200, message = "Successfully retrieved the reservation history"))
+    @ReservationHistoricSwaggerInfo
     public ResponseEntity<List<ReservationDTO>> reservationHistoric() {
         return ResponseEntity.ok(reservationService.findPastReservations());
     }

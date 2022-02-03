@@ -2,18 +2,18 @@ package com.tenniscourts.tenniscourts.model;
 
 import com.tenniscourts.schedules.model.ScheduleDTO;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class TennisCourtDTO {
 
     @ApiModelProperty("Tennis court identifier")
